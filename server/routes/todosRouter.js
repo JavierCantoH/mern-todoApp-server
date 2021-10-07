@@ -84,7 +84,31 @@ todoRouter.put("/:id", async (req, res) => {
         res.status(500).send(error.message);
         console.log(error.message);
     }
-  });
+});
+
+// UPDATE TODO IS COMPLETE?
+todoRouter.patch("/:id", async (req, res) => {
+    // validate if the todo exist by id
+    const todo = await Todo.findById(req.params.id);
+    // to do not found
+    if (!todo) return res.status(404).send("Todo not found...");
+    // update todo isComplete field
+    try{
+        const updatedTodo = await Todo.findByIdAndUpdate(
+        req.params.id,
+        {
+            isComplete: !todo.isComplete,
+        },
+        {
+            new: true,
+        }
+        );
+        res.send(updatedTodo);
+    } catch(error){
+        res.status(500).send(error.message);
+        console.log(error.message);
+    }
+});
 
 // DELETE A TODO
 todoRouter.delete("/:id", async (req, res) => {
