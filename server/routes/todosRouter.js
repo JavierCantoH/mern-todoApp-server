@@ -4,11 +4,13 @@ const Todo = require("../models/todo");
 const express = require("express");
 // requiere joi for validate data before passing it to the db
 const Joi = require("joi");
+// auth middleware
+const auth = require("../middleware/auth");
 // create a router
 const todoRouter = express.Router();
 
 // GET ALL TODOS
-todoRouter.get("/", async(req, res) => {
+todoRouter.get("/", auth, async(req, res) => {
     try {
         // find all todos sorted by more recent created (more complicated queries used mongoose documentation https://mongoosejs.com/docs/queries.html)
         const todos = await Todo.find().sort({ date: -1 });
@@ -19,7 +21,7 @@ todoRouter.get("/", async(req, res) => {
 })
 
 // POST NEW TODO
-todoRouter.post("/", async(req, res) => {
+todoRouter.post("/", auth, async(req, res) => {
     // joi schema validation
     const schema = Joi.object({
         name: Joi.string().min(3).max(200).required(),
@@ -50,7 +52,7 @@ todoRouter.post("/", async(req, res) => {
 });
 
 // UPDATE TODO
-todoRouter.put("/:id", async (req, res) => {
+todoRouter.put("/:id", auth, async (req, res) => {
     // joi schema validation
     const schema = Joi.object({
         name: Joi.string().min(3).max(200).required(),
@@ -87,7 +89,7 @@ todoRouter.put("/:id", async (req, res) => {
 });
 
 // UPDATE TODO IS COMPLETE?
-todoRouter.patch("/:id", async (req, res) => {
+todoRouter.patch("/:id", auth, async (req, res) => {
     // validate if the todo exist by id
     try{
         const todo = await Todo.findById(req.params.id);
@@ -111,7 +113,7 @@ todoRouter.patch("/:id", async (req, res) => {
 });
 
 // DELETE A TODO
-todoRouter.delete("/:id", async (req, res) => {
+todoRouter.delete("/:id", auth, async (req, res) => {
     try{
         // validate if the todo exist by id
         const todo = await Todo.findById(req.params.id);
