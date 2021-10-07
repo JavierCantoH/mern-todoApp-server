@@ -20,7 +20,6 @@ todoRouter.get("/", async(req, res) => {
 
 // POST NEW TODO
 todoRouter.post("/", async(req, res) => {
-
     // joi schema
     const schema = Joi.object({
         name: Joi.string().min(3).max(200).required(),
@@ -49,5 +48,17 @@ todoRouter.post("/", async(req, res) => {
         console.log(error.message);
     }
 });
+
+// DELETE A TODO
+todoRouter.delete("/:id", async (req, res) => {
+    try{
+        // findByIdAndDelete requires the id of the doc that will be deleted
+        const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
+        res.send(deletedTodo);
+    } catch(error){
+        es.status(500).send(error.message);
+        console.log(error.message);
+    }  
+  });
 
 module.exports = todoRouter;
