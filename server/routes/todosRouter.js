@@ -20,7 +20,7 @@ todoRouter.get("/", async(req, res) => {
 
 // POST NEW TODO
 todoRouter.post("/", async(req, res) => {
-    // joi schema
+    // joi schema validation
     const schema = Joi.object({
         name: Joi.string().min(3).max(200).required(),
         author: Joi.string().min(3),
@@ -48,6 +48,43 @@ todoRouter.post("/", async(req, res) => {
         console.log(error.message);
     }
 });
+
+// UPDATE TODO
+todoRouter.put("/:id", async (req, res) => {
+    // joi schema validation
+    const schema = Joi.object({
+        name: Joi.string().min(3).max(200).required(),
+        author: Joi.string().min(3),
+        uid: Joi.string(),
+        isComplete: Joi.boolean(),
+        date: Joi.date(),
+    });
+
+    // validate the data entered by the user using joi
+    const { error } = schema.validate(req.body);
+    // if there is an error send it to the client and to the console
+    if (error) return res.status(400).send(error.details[0].message);
+    console.log(error);
+    // validate if the todo exist by id
+    const todo = await Todo.findById(req.params.id);
+    // to do not found
+    if (!todo) return res.status(404).send("Todo not found...");
+    // to do found
+    // extracting the data that will be saved in the db
+    const { name, author, isComplete, date, uid } = req.body;
+    // update todo
+    try{
+    const updatedTodo = await Todo.findByIdAndUpdate(
+        req.params.id,
+        { name, author, isComplete, date, uid },
+        { new: true }
+    );
+    res.send(updatedTodo);
+    } catch(error){
+        res.status(500).send(error.message);
+        console.log(error.message);
+    }
+  });
 
 // DELETE A TODO
 todoRouter.delete("/:id", async (req, res) => {
