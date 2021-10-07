@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 // import routes
 const todos = require('./routes/todosRouter');
-const signUp = require('./routes/signUpRouter')
+const signUp = require('./routes/signUpRouter');
+const signIn = require('./routes/signInRouter');
 // import models
 const Todo = require('./models/todo');
 const User = require('./models/user');
@@ -18,8 +19,7 @@ require('dotenv').config();
 // app use routes
 app.use('/api/todos', todos);
 app.use('/api/signUp', signUp);
-
-
+app.use('/api/signIn', signIn);
 //testing
 app.get('/', (req, res) => {
     res.send("welcome to our todos api...")
@@ -27,7 +27,6 @@ app.get('/', (req, res) => {
 // port
 const port = process.env.PORT || 5000;
 app.listen(port,() => console.log("Express server is running :) on port " + port));
-
 // Mongoose connection 
 const connection_string = process.env.CONNECTION_STRING
 mongoose

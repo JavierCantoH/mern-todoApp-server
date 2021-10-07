@@ -4,13 +4,13 @@ const User = require("../models/user");
 const express = require("express");
 // requiere joi for validate data before passing it to the db
 const Joi = require("joi");
-// create a router
-const userRouter = express.Router();
 // bcrypt for hassing user passwords
 const bcrypt = require("bcrypt");
+// create a router
+const signUpRouter = express.Router();
 
 // signup a new user (thats why we only have post)
-userRouter.post("/", async (req, res) => {
+signUpRouter.post("/", async (req, res) => {
     // joi schema validation
     const schema = Joi.object({
       name: Joi.string().min(3).max(30).required(),
@@ -42,4 +42,4 @@ userRouter.post("/", async (req, res) => {
     }
 });
   
-module.exports = userRouter;
+module.exports = signUpRouter;
