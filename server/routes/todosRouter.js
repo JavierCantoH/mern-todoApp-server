@@ -66,20 +66,20 @@ todoRouter.put("/:id", async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
     console.log(error);
     // validate if the todo exist by id
-    const todo = await Todo.findById(req.params.id);
-    // to do not found
-    if (!todo) return res.status(404).send("Todo not found...");
-    // to do found
-    // extracting the data that will be saved in the db
-    const { name, author, isComplete, date, uid } = req.body;
-    // update todo
     try{
-    const updatedTodo = await Todo.findByIdAndUpdate(
-        req.params.id,
-        { name, author, isComplete, date, uid },
-        { new: true }
-    );
-    res.send(updatedTodo);
+        const todo = await Todo.findById(req.params.id);
+        // to do not found
+        if (!todo) return res.status(404).send("Todo not found...");
+        // to do found
+        // extracting the data that will be saved in the db
+        const { name, author, isComplete, date, uid } = req.body;
+        // update todo
+        const updatedTodo = await Todo.findByIdAndUpdate(
+            req.params.id,
+            { name, author, isComplete, date, uid },
+            { new: true }
+        );
+        res.send(updatedTodo);
     } catch(error){
         res.status(500).send(error.message);
         console.log(error.message);
@@ -89,11 +89,11 @@ todoRouter.put("/:id", async (req, res) => {
 // UPDATE TODO IS COMPLETE?
 todoRouter.patch("/:id", async (req, res) => {
     // validate if the todo exist by id
-    const todo = await Todo.findById(req.params.id);
-    // to do not found
-    if (!todo) return res.status(404).send("Todo not found...");
-    // update todo isComplete field
     try{
+        const todo = await Todo.findById(req.params.id);
+        // to do not found
+        if (!todo) return res.status(404).send("Todo not found...");
+        // update todo isComplete field
         const updatedTodo = await Todo.findByIdAndUpdate(
         req.params.id,
         {
@@ -113,7 +113,11 @@ todoRouter.patch("/:id", async (req, res) => {
 // DELETE A TODO
 todoRouter.delete("/:id", async (req, res) => {
     try{
-        // findByIdAndDelete requires the id of the doc that will be deleted
+        // validate if the todo exist by id
+        const todo = await Todo.findById(req.params.id);
+        // to do not found
+        if (!todo) return res.status(404).send("Todo not found...");
+        // delete todo
         const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
         res.send(deletedTodo);
     } catch(error){
