@@ -7,6 +7,17 @@ const Joi = require("joi");
 // create a router
 const todoRouter = express.Router();
 
+// GET ALL TODOS
+todoRouter.get("/", async(req, res) => {
+    try {
+        // find all todos sorted by more recent created (more complicated queries used mongoose documentation https://mongoosejs.com/docs/queries.html)
+        const todos = await Todo.find().sort({ date: -1 });
+        res.send(todos);
+    } catch (error){
+        res.status(500).send("Error: " + error.message);
+    }
+})
+
 // POST NEW TODO
 todoRouter.post("/", async(req, res) => {
 
