@@ -1,4 +1,4 @@
-// import model task
+// import model todo
 const Todo = require("../models/todo");
 // requiere express
 const express = require("express");

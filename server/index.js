@@ -3,9 +3,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 // import routes
-const todos = require('./routes/todosRouter')
+const todos = require('./routes/todosRouter');
+const signUp = require('./routes/signUpRouter')
 // import models
-const Todo = require('./models/todo')
+const Todo = require('./models/todo');
+const User = require('./models/user');
 // create express app
 const app = express();
 app.use(express.json());
@@ -14,7 +16,8 @@ app.use(cors());
 // dotenv for mongo db atlas
 require('dotenv').config();
 // app use routes
-app.use('/api/todos', todos)
+app.use('/api/todos', todos);
+app.use('/api/signUp', signUp);
 
 
 //testing
