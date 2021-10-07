@@ -6,6 +6,8 @@ const express = require("express");
 const Joi = require("joi");
 // bcrypt for hassing user passwords
 const bcrypt = require("bcrypt");
+// jwt 
+const jwt = require("jsonwebtoken");
 // create a router
 const signUpRouter = express.Router();
 
@@ -35,7 +37,10 @@ signUpRouter.post("/", async (req, res) => {
         user.password = await bcrypt.hash(user.password, salt);
         // save the user to the db
         await user.save();
-        res.send("user created");
+        // using jwt to sing in automatically
+        const jwtSecretKey = process.env.SECRET_KEY;
+        const token = jwt.sign({ _id: user._id, name: user.name, email: user.email }, jwtSecretKey)
+        res.send(token);
     } catch(error){
         res.status(500).send(error.message);
         console.log(error.message);
