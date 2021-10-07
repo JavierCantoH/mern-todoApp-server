@@ -21,7 +21,7 @@ todoRouter.get("/", auth, async(req, res) => {
 })
 
 // POST NEW TODO
-todoRouter.post("/", auth, async(req, res) => {
+todoRouter.post("/", async(req, res) => {
     // joi schema validation
     const schema = Joi.object({
         name: Joi.string().min(3).max(200).required(),
@@ -52,7 +52,7 @@ todoRouter.post("/", auth, async(req, res) => {
 });
 
 // UPDATE TODO
-todoRouter.put("/:id", auth, async (req, res) => {
+todoRouter.put("/:id", async (req, res) => {
     // joi schema validation
     const schema = Joi.object({
         name: Joi.string().min(3).max(200).required(),
@@ -89,7 +89,7 @@ todoRouter.put("/:id", auth, async (req, res) => {
 });
 
 // UPDATE TODO IS COMPLETE?
-todoRouter.patch("/:id", auth, async (req, res) => {
+todoRouter.patch("/:id", async (req, res) => {
     // validate if the todo exist by id
     try{
         const todo = await Todo.findById(req.params.id);
@@ -113,7 +113,7 @@ todoRouter.patch("/:id", auth, async (req, res) => {
 });
 
 // DELETE A TODO
-todoRouter.delete("/:id", auth, async (req, res) => {
+todoRouter.delete("/:id", async (req, res) => {
     try{
         // validate if the todo exist by id
         const todo = await Todo.findById(req.params.id);
