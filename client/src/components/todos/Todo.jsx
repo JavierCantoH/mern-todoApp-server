@@ -7,6 +7,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Create, Delete, CheckCircle } from '@material-ui/icons';
 // date styling format
 import moment from "moment";
+// dispatch: redux hook
+import { useDispatch } from 'react-redux';
+// import action creators
+import { checkTodo } from '../../store/actions/todoActions';
 
 // using makeStyles
 const useStyles = makeStyles({
@@ -33,6 +37,8 @@ const useStyles = makeStyles({
 const Todo = ({ todo, setTodo }) => {
     // using the material ui styles
     const classes = useStyles();
+    // using dispatch redux hook
+    const dispatch = useDispatch();
 
     const handleUpdateClick = (id) => {
         setTodo(todo);
@@ -43,6 +49,11 @@ const Todo = ({ todo, setTodo }) => {
             behavior: 'smooth'
         });
     };
+
+    const handleCheck = (id) => {
+        dispatch(checkTodo(id));
+    };
+    
     
 
     return (
@@ -74,15 +85,13 @@ const Todo = ({ todo, setTodo }) => {
                         aria-label="outlined primary button group"
                     >
                         {/* conditionally render the buttons  */}
-                        {todo.isComplete ? 
-                        // button for marking complete or incomplete todo
-                            (<Button>
-                                <CheckCircle color="action" className={classes.isComplete} />
-                            </Button>) : 
-                            (<Button>
-                                <CheckCircle color="action"/>
-                            </Button>) 
-                        }
+                        {/* button for marking complete or incomplete todo */}
+                        <Button 
+                            onClick={() => handleCheck(todo._id)}>
+                                {todo.isComplete ? (<CheckCircle className={classes.isComplete} />) : 
+                                (<CheckCircle color="action" />)
+                            }
+                        </Button>
                         <Button onClick={ () => handleUpdateClick()}>
                         {/* button for editing todo */}
                             <Create color="primary" />

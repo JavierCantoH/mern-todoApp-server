@@ -30,7 +30,6 @@ const ListTodos = ({ setTodo }) => {
     const dispatch = useDispatch();
     // select the state from the redux store
     const todos = useSelector((state) => state.todos)
-    console.log(todos);
     // use useEffect hook
     useEffect(() => {
         dispatch(getTodos());

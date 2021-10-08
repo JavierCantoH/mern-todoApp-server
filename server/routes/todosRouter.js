@@ -79,6 +79,7 @@ todoRouter.put("/:id", async (req, res) => {
         const updatedTodo = await Todo.findByIdAndUpdate(
             req.params.id,
             { name, author, isComplete, date, uid },
+            // flag to return updated todo insted of old todo
             { new: true }
         );
         res.send(updatedTodo);
@@ -98,12 +99,9 @@ todoRouter.patch("/:id", async (req, res) => {
         // update todo isComplete field
         const updatedTodo = await Todo.findByIdAndUpdate(
         req.params.id,
-        {
-            isComplete: !todo.isComplete,
-        },
-        {
-            new: true,
-        }
+        {isComplete: !todo.isComplete,}, 
+        // flag to return updated todo insted of old todo
+        {new: true}
         );
         res.send(updatedTodo);
     } catch(error){

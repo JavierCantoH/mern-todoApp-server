@@ -23,6 +23,17 @@ const todoReducer = (state = [], action) => {
                 // if it doesnt match just return the old todo and check the next one in the array til de id matches
                 todo._id === action.todo.data._id ? action.todo.data : todo
             )
+        case "CHECK_TODO":
+            // toastify messages notifications 
+            toast.success("A todo status was changed...", {
+                position: toast.POSITION.BOTTOM_RIGHT,
+            });
+            return state.map((todo) => 
+                // checking if the updated todo from actions matches with the todo updated
+                // maping array of todos
+                // if it doesnt match just return the old todo and check the next one in the array til de id matches
+                todo._id === action.todo.data._id ? action.todo.data : todo
+            )
         default:
             return state;
     }

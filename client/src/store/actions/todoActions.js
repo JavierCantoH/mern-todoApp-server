@@ -85,3 +85,30 @@ export const updateTodo = (updatedTodo, id) => {
       });
   };
 };
+
+// CHECK A TODO  AS COMPLETE OR NOT action creator
+export const checkTodo = (id) => {
+  // using redux thunk 
+  return (dispatch) => {
+    // perform an async action using axios
+    axios
+    // patch parameter (endpoint, empty obj not used in the backend)
+      .patch(`${url}/todos/${id}`, {})
+      // .then is our async function
+      // when is recieed in the backend it will be added to the data base 
+      //and then we get a respnse which is the todo that was added to the db
+      .then((todo) => {
+        dispatch({
+            // ADD_TODO from reducers
+          type: "CHECK_TODO",
+          todo
+        });
+      })
+      .catch((error) => {
+        console.log(error.response);
+        toast.error(error.response?.data, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+      });
+  };
+};
