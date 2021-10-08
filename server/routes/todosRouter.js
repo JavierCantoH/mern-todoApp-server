@@ -5,12 +5,12 @@ const express = require("express");
 // requiere joi for validate data before passing it to the db
 const Joi = require("joi");
 // auth middleware
-const auth = require("../middleware/auth");
+// const auth = require("../middleware/auth");
 // create a router
 const todoRouter = express.Router();
 
 // GET ALL TODOS
-todoRouter.get("/", auth, async(req, res) => {
+todoRouter.get("/", async(req, res) => {
     try {
         // find all todos sorted by more recent created (more complicated queries used mongoose documentation https://mongoosejs.com/docs/queries.html)
         const todos = await Todo.find().sort({ date: -1 });

@@ -1,10 +1,16 @@
-import React from 'react';
+// useEffect is a react hook called every time our component renders, once it is called, we are able to dispatch our action creator from there
+import React, { useEffect } from 'react';
 // material ui components
 import { Typography } from "@material-ui/core";
 // material ui styling
 import { makeStyles } from "@material-ui/core/styles";
 // import single todo
 import Todo from "./Todo";
+// dispatch: redux hook, useSelector: redux hook for enebale us to select a piece of state from the redux store
+import { useDispatch, useSelector } from 'react-redux';
+// import action creators
+import { getTodos } from '../../store/actions/todoActions';
+
 
 // using makeStyles
 const useStyles = makeStyles((theme) => ({
@@ -19,6 +25,15 @@ const useStyles = makeStyles((theme) => ({
 const ListTodos = () => {
     // using the material ui styles
     const classes = useStyles();
+    // using dispatch redux hook
+    const dispatch = useDispatch();
+    // select the state from the redux store
+    const todos = useSelector((state) => state.todos)
+    console.log(todos);
+    // use useEffect hook
+    useEffect(() => {
+        dispatch(getTodos());
+    }, [dispatch])
 
     return (
         <>
