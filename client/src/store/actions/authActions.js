@@ -36,3 +36,18 @@ export const signUp = (user) => {
         });
     };
 };
+
+// LOAD USER action creator for persistency when there is a jwt saved in web token even of u refresh the page
+export const loadUser = () => {
+    // using redux thunk accessing the store
+    return (dispatch, getState) => {
+      const token = getState().auth.token;
+      // if there is a token saved in local storage
+      if (token) {
+        dispatch({
+          type: "USER_LOADED",
+          token,
+        });
+      } else return null;
+    };
+};

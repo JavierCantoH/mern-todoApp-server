@@ -1,4 +1,5 @@
-import React from 'react';
+// use state hook for redux
+import React, { useEffect } from 'react';
 // react router
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 // components
@@ -14,6 +15,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import { ToastContainer } from "react-toastify";
 // toastify css
 import "react-toastify/dist/ReactToastify.css";
+// redux hooks
+import { useDispatch } from 'react-redux';
+// import action creators
+import { loadUser } from './store/actions/authActions';
 
 // material ui styles
 const useStyles = makeStyles({
@@ -24,6 +29,14 @@ const useStyles = makeStyles({
 
 function App() {
   const classes = useStyles();
+  // using dispatch redux hook
+  const dispatch = useDispatch();
+  // use useEffect hook for every time the page reloads
+  useEffect(() => {
+    // dispatch user action creator
+    dispatch(loadUser());
+  }, [dispatch]);
+
   return (
     <>
       <BrowserRouter>
