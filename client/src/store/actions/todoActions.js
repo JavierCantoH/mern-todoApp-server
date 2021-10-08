@@ -112,3 +112,30 @@ export const checkTodo = (id) => {
       });
   };
 };
+
+// DELETE A TODO  AS COMPLETE OR NOT action creator
+export const deleteTodo = (id) => {
+  // using redux thunk 
+  return (dispatch) => {
+    // perform an async action using axios
+    axios
+    // delete parameter (endpoint)
+      .delete(`${url}/todos/${id}`)
+      // .then is our async function
+      // when is recieed in the backend it will be added to the data base 
+      //and then we get a respnse which is the todo that was added to the db
+      .then(() => {
+        dispatch({
+            // ADD_TODO from reducers
+          type: "DELETE_TODO",
+          id
+        });
+      })
+      .catch((error) => {
+        console.log(error.response);
+        toast.error(error.response?.data, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+      });
+  };
+};

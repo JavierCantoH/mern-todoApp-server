@@ -10,7 +10,7 @@ import moment from "moment";
 // dispatch: redux hook
 import { useDispatch } from 'react-redux';
 // import action creators
-import { checkTodo } from '../../store/actions/todoActions';
+import { checkTodo, deleteTodo } from '../../store/actions/todoActions';
 
 // using makeStyles
 const useStyles = makeStyles({
@@ -52,6 +52,10 @@ const Todo = ({ todo, setTodo }) => {
 
     const handleCheck = (id) => {
         dispatch(checkTodo(id));
+    };
+
+    const handleDelete = (id) => {
+        dispatch(deleteTodo(id));
     };
     
     
@@ -96,7 +100,7 @@ const Todo = ({ todo, setTodo }) => {
                         {/* button for editing todo */}
                             <Create color="primary" />
                         </Button>
-                        <Button >
+                        <Button onClick={() => handleDelete(todo._id)}>
                         {/* button for deleting todo */}
                             <Delete color="secondary" />
                         </Button>

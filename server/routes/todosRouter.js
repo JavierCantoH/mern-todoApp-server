@@ -112,18 +112,13 @@ todoRouter.patch("/:id", async (req, res) => {
 
 // DELETE A TODO
 todoRouter.delete("/:id", async (req, res) => {
-    try{
-        // validate if the todo exist by id
-        const todo = await Todo.findById(req.params.id);
-        // to do not found
-        if (!todo) return res.status(404).send("Todo not found...");
-        // delete todo
-        const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
-        res.send(deletedTodo);
-    } catch(error){
-        es.status(500).send(error.message);
-        console.log(error.message);
-    }  
-  });
+    // validate if the todo exist by id
+    const todo = await Todo.findById(req.params.id);
+    // to do not found
+    if (!todo) return res.status(404).send("Todo not found...");
+    // if to do exists, delete todo
+    const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
+    res.send(deletedTodo);
+});
 
 module.exports = todoRouter;

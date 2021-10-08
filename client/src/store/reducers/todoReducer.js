@@ -34,6 +34,13 @@ const todoReducer = (state = [], action) => {
                 // if it doesnt match just return the old todo and check the next one in the array til de id matches
                 todo._id === action.todo.data._id ? action.todo.data : todo
             )
+        case "DELETE_TODO":
+            // toastify messages notifications 
+            toast.success("A todo was deleted...", {
+                position: toast.POSITION.BOTTOM_RIGHT,
+            });
+            // filter our todos and exclude the one we just deleted
+            return state.filter((todo) => todo._id !== action.id);
         default:
             return state;
     }
