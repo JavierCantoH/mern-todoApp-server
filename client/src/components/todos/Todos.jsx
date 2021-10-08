@@ -10,7 +10,7 @@ const Todos = () => {
     // Tdos.jsx is the parent of add todo and list todo, and todo.jsx is a child of list todos
     // set up default state hook
     const [todo, setTodo] = useState({
-        name: "name",
+        name: "",
         isComplete: false
     })
     return(
