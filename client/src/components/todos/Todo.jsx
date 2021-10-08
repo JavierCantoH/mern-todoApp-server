@@ -30,9 +30,19 @@ const useStyles = makeStyles({
 });
   
 // props todo received from List todos
-const Todo = ({ todo }) => {
+const Todo = ({ todo, setTodo }) => {
     // using the material ui styles
     const classes = useStyles();
+
+    const handleUpdateClick = (id) => {
+        setTodo(todo);
+        // scroll at the top every time we click on this button
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+    };
     
 
     return (
@@ -65,6 +75,7 @@ const Todo = ({ todo }) => {
                     >
                         {/* conditionally render the buttons  */}
                         {todo.isComplete ? 
+                        // button for marking complete or incomplete todo
                             (<Button>
                                 <CheckCircle color="action" className={classes.isComplete} />
                             </Button>) : 
@@ -72,10 +83,12 @@ const Todo = ({ todo }) => {
                                 <CheckCircle color="action"/>
                             </Button>) 
                         }
-                        <Button >
+                        <Button onClick={ () => handleUpdateClick()}>
+                        {/* button for editing todo */}
                             <Create color="primary" />
                         </Button>
                         <Button >
+                        {/* button for deleting todo */}
                             <Delete color="secondary" />
                         </Button>
                     </ButtonGroup>

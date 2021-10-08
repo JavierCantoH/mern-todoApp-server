@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
       },
 }));
 
-const ListTodos = () => {
+// props from parent Todos.jsx
+const ListTodos = ({ setTodo }) => {
     // using the material ui styles
     const classes = useStyles();
     // using dispatch redux hook
@@ -49,6 +50,7 @@ const ListTodos = () => {
                         <Todo
                             todo={todo}
                             key={todo._id}
+                            setTodo={setTodo}
                         />
                     );
                 })}

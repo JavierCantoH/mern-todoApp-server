@@ -1,5 +1,4 @@
-// use state hook for redux
-import React, { useState } from 'react';
+import React from 'react';
 // material ui components
 import { TextField, Button } from "@material-ui/core";
 // material ui styling
@@ -9,7 +8,7 @@ import { Send } from '@material-ui/icons';
 // dispatch: redux hook
 import { useDispatch } from 'react-redux';
 // import action creators
-import { addTodo } from '../../store/actions/todoActions';
+import { addTodo, updateTodo } from '../../store/actions/todoActions';
 
 // using makeStyles
 const useStyles = makeStyles({
@@ -25,23 +24,39 @@ const useStyles = makeStyles({
         marginLeft: "20px",
     }
 });
-
-const AddTodo = () => {
+// props from parent Todos.jsx
+const AddTodo = ({ todo, setTodo }) => {
     // using the material ui styles
     const classes = useStyles();
     // using dispatch redux hook
     const dispatch = useDispatch();
-    // set up default state hook
-    const [todo, setTodo] = useState({
-        name: "name",
-        isComplete: false
-    })
+    
 
     const handleSubmit = (e) => {
         // prevent the page for refreshing when submiting form
         e.preventDefault();
-        // dispatch add todo action creator 
-        dispatch(addTodo(todo));
+        // checking if we are adding a new todo or updating an existing one
+        if(todo._id){
+            // if it exist we are updating the todo
+            const id = todo._id;
+            const updatedTodo = {
+                name: todo.name,
+                isComplete: todo.isComplete,    
+                date: todo.date,
+                author: "todo.author",
+                uid: todo.uid
+            }
+            // dispatch of updated todo from update todo action creator
+            dispatch(updateTodo(updatedTodo, id));
+        } else {
+            // the todo does not exist so we create a new todo
+            const newTodo = {
+                ...todo,
+                date: new Date()
+            }
+            // dispatch of new todo from add todo action creator 
+            dispatch(addTodo(newTodo));
+        }
         // when the function is done, reseting todo to default state
         setTodo({ 
             name: '', 
@@ -63,7 +78,7 @@ const AddTodo = () => {
                     value = {todo.name}
                     // on change event to update our value (e) for "event"
                     // ... spread operator to spread the properties of our todo
-                    onChange = {(e) => setTodo({...todo, name: e.target.value, date: new Date()})}
+                    onChange = {(e) => setTodo({...todo, name: e.target.value})}
                 />
                 <Button variant="contained" color="primary" className = {classes.submitButton} type="submit">
                     <Send/>

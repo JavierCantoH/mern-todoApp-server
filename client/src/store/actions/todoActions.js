@@ -8,8 +8,8 @@ export const getTodos = () => {
   // using redux thunk 
   return (dispatch) => {
     // perform an async action using axios
-  axios
-  // get parameter (endpoint)
+    axios
+    // get parameter (endpoint)
     .get(`${url}/todos`)
     // .then is our async function
     // when is recieed in the backend it will be added to the data base 
@@ -24,18 +24,18 @@ export const getTodos = () => {
     .catch((error) => {
       console.log(error.response);
     });
-};
+  };
 };
 
 
 // ADDING A NEW TODO action creator
-export const addTodo = (todo) => {
+export const addTodo = (newTodo) => {
     // using redux thunk accessing the store
     return (dispatch, getState) => {
         // perform an async action using axios
       axios
       // post parameter (endpoint, body of our req)
-        .post(`${url}/todos`, todo)
+        .post(`${url}/todos`, newTodo)
         // .then is our async function
         // when is recieed in the backend it will be added to the data base 
         //and then we get a respnse which is the todo that was added to the db
@@ -50,4 +50,29 @@ export const addTodo = (todo) => {
           console.log(error.response);
         });
     };
+};
+
+
+// UPDATING A NEW TODO action creator
+export const updateTodo = (updatedTodo, id) => {
+  // using redux thunk 
+  return (dispatch) => {
+    // perform an async action using axios
+    axios
+    // put parameter (endpoint, body of our req)
+      .put(`${url}/todos/${id}`, updatedTodo)
+      // .then is our async function
+      // when is recieed in the backend it will be added to the data base 
+      //and then we get a respnse which is the todo that was added to the db
+      .then((todo) => {
+        dispatch({
+            // ADD_TODO from reducers
+          type: "UPDATE_TODO",
+          todo
+        });
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
   };
+};
