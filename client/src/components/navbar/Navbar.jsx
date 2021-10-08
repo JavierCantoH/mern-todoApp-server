@@ -21,12 +21,15 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: "none",
       color: "#fafafa",
     },
-  }));
+}));
 
 const Navbar = () => {
+    // using the material ui styles
     const classes = useStyles();
+    // use history from react router dom
     const history = useHistory();
 
+    // signout fucntion
     const handleSignOut = () => {
         history.push("/signin");
     };
@@ -80,7 +83,7 @@ const Navbar = () => {
             </AppBar>
           </div>
         </>
-      );
+    );
 }
 
 export default Navbar;
