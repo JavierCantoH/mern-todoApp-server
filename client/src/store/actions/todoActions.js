@@ -2,6 +2,8 @@
 import axios from "axios";
 // import url end point to connect server side api
 import { url } from "../../api";
+// toastify messages
+import { toast } from "react-toastify";
 
 // GETTING ALL TODOS action creator
 export const getTodos = () => {
@@ -48,6 +50,10 @@ export const addTodo = (newTodo) => {
         })
         .catch((error) => {
           console.log(error.response);
+          // toastify messages notifications using optional changing operator
+          toast.error(error.response?.data, {
+            position: toast.POSITION.BOTTOM_RIGHT,
+          });
         });
     };
 };
@@ -73,6 +79,9 @@ export const updateTodo = (updatedTodo, id) => {
       })
       .catch((error) => {
         console.log(error.response);
+        toast.error(error.response?.data, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
       });
   };
 };

@@ -10,6 +10,10 @@ import NavBar from './components/navbar/Navbar';
 import { Container } from '@material-ui/core';
 // material ui styles
 import { makeStyles } from "@material-ui/core/styles";
+// react toast container for notifications
+import { ToastContainer } from "react-toastify";
+// toastify css
+import "react-toastify/dist/ReactToastify.css";
 
 // material ui styles
 const useStyles = makeStyles({
@@ -23,6 +27,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+      <ToastContainer/>
         <Container maxWidth = "md">
           <NavBar />
           <Container className={classes.contentStyle} maxWidth = "sm">

@@ -1,11 +1,22 @@
+// toastify messages
+import { toast } from "react-toastify";
+
 const todoReducer = (state = [], action) => {
     // check action types and then update the state according to the action performed
     switch (action.type) {
         case "GET_TODOS":
             return action.todos.data;
         case "ADD_TODO":
+            // toastify messages notifications 
+            toast.success("A todo was added...", {
+                position: toast.POSITION.BOTTOM_RIGHT,
+            });
             return [action.todo.data, ...state];
         case "UPDATE_TODO":
+            // toastify messages notifications 
+            toast.success("A todo was updated...", {
+                position: toast.POSITION.BOTTOM_RIGHT,
+            });
             return state.map((todo) => 
                 // checking if the updated todo from actions matches with the todo updated
                 // maping array of todos
