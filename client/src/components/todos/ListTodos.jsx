@@ -39,10 +39,19 @@ const ListTodos = () => {
         <>
             <div className={classes.todosStyle}>
                 <Typography variant="h5">
-                    theTodos;
+                    {/* if statement to check the existance fo todos */}
+                    {todos.length > 0 ? "theTodos;" : "noTodosYet;"}
                 </Typography>
-                <Todo/>
-                <Todo/>
+                {/* if there exist todos, we map the array of todos */}
+                { todos && todos.map((todo) => {
+                    return(
+                        // send todo to Todo.jsx as a prop
+                        <Todo
+                            todo={todo}
+                            key={todo._id}
+                        />
+                    );
+                })}
         </div>
     </>
     );

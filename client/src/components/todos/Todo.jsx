@@ -5,6 +5,8 @@ import { Typography, ButtonGroup, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 // material ui icons
 import { Create, Delete, CheckCircle } from '@material-ui/icons';
+// date styling format
+import moment from "moment";
 
 // using makeStyles
 const useStyles = makeStyles({
@@ -27,8 +29,8 @@ const useStyles = makeStyles({
     },
 });
   
-
-const Todo = () => {
+// props todo received from List todos
+const Todo = ({ todo }) => {
     // using the material ui styles
     const classes = useStyles();
     
@@ -37,9 +39,15 @@ const Todo = () => {
         <>
             <div className={classes.todoStyle}>
                 <div>
-                    <Typography variant="subtitle1" className={classes.checked}>
-                    Learn React
-                    </Typography>
+                    {/* conditionally render the line through the todo if is completed  */}
+                    {todo.isComplete ? 
+                        (<Typography variant="subtitle1" className={classes.checked}>
+                            {todo.name}
+                        </Typography>) : 
+                        (<Typography variant="subtitle1">
+                            {todo.name}
+                        </Typography>)
+                    }
                     <Typography variant="subtitle1">
 
                     </Typography>
@@ -47,7 +55,7 @@ const Todo = () => {
                         Author: Javier
                     </Typography>
                     <Typography variant="body2" className={classes.moreStyle}>
-                        Added: 4 days ago
+                        Added: {moment(todo.date).fromNow()}
                     </Typography>
                 </div>
                 <div>
@@ -55,10 +63,15 @@ const Todo = () => {
                         size="small"
                         aria-label="outlined primary button group"
                     >
-                        <Button>
-                            <CheckCircle className={classes.isComplete} />
-                            <CheckCircle color="action" />
-                        </Button>
+                        {/* conditionally render the buttons  */}
+                        {todo.isComplete ? 
+                            (<Button>
+                                <CheckCircle color="action" className={classes.isComplete} />
+                            </Button>) : 
+                            (<Button>
+                                <CheckCircle color="action"/>
+                            </Button>) 
+                        }
                         <Button >
                             <Create color="primary" />
                         </Button>
