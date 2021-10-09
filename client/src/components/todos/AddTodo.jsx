@@ -43,7 +43,7 @@ const AddTodo = ({ todo, setTodo }) => {
                 name: todo.name,
                 isComplete: todo.isComplete,    
                 date: todo.date,
-                author: "todo.author",
+                author: todo.author,
                 uid: todo.uid
             }
             // dispatch of updated todo from update todo action creator

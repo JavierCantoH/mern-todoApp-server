@@ -1,7 +1,4 @@
 // stop a user for using todos opoerations if its not logeed in
-
-
-
 // jwt
 const jwt = require("jsonwebtoken");
 // dotenv

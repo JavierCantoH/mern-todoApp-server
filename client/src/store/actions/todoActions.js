@@ -1,7 +1,7 @@
 // impor axios
 import axios from "axios";
-// import url end point to connect server side api
-import { url } from "../../api";
+// import url end point to connect server side api and headers function for making sure that only users login (with token) can use the todos operations
+import { url, setHeaders } from "../../api";
 // toastify messages
 import { toast } from "react-toastify";
 
@@ -12,7 +12,7 @@ export const getTodos = () => {
     // perform an async action using axios
     axios
     // get parameter (endpoint)
-    .get(`${url}/todos`)
+    .get(`${url}/todos`, setHeaders())
     // .then is our async function
     // when is recieed in the backend it will be added to the data base 
     //and then we get a respnse which is the todo that was added to the db
@@ -34,10 +34,12 @@ export const getTodos = () => {
 export const addTodo = (newTodo) => {
     // using redux thunk accessing the store
     return (dispatch, getState) => {
+      const author = getState().auth.name;
+      const uid = getState().auth._id;
         // perform an async action using axios
       axios
       // post parameter (endpoint, body of our req)
-        .post(`${url}/todos`, newTodo)
+        .post(`${url}/todos`, { ...newTodo, author, uid }, setHeaders())
         // .then is our async function
         // when is recieed in the backend it will be added to the data base 
         //and then we get a respnse which is the todo that was added to the db
@@ -66,7 +68,7 @@ export const updateTodo = (updatedTodo, id) => {
     // perform an async action using axios
     axios
     // put parameter (endpoint, body of our req)
-      .put(`${url}/todos/${id}`, updatedTodo)
+      .put(`${url}/todos/${id}`, updatedTodo, setHeaders())
       // .then is our async function
       // when is recieed in the backend it will be added to the data base 
       //and then we get a respnse which is the todo that was added to the db
@@ -93,7 +95,7 @@ export const checkTodo = (id) => {
     // perform an async action using axios
     axios
     // patch parameter (endpoint, empty obj not used in the backend)
-      .patch(`${url}/todos/${id}`, {})
+      .patch(`${url}/todos/${id}`, {}, setHeaders())
       // .then is our async function
       // when is recieed in the backend it will be added to the data base 
       //and then we get a respnse which is the todo that was added to the db
@@ -120,7 +122,7 @@ export const deleteTodo = (id) => {
     // perform an async action using axios
     axios
     // delete parameter (endpoint)
-      .delete(`${url}/todos/${id}`)
+      .delete(`${url}/todos/${id}`, setHeaders())
       // .then is our async function
       // when is recieed in the backend it will be added to the data base 
       //and then we get a respnse which is the todo that was added to the db
