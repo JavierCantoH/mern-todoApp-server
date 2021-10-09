@@ -18,8 +18,8 @@ app.use(cors());
 require('dotenv').config();
 // app use routes
 app.use('/api/todos', todos);
-app.use('/api/signUp', signUp);
-app.use('/api/signIn', signIn);
+app.use('/api/signup', signUp);
+app.use('/api/signin', signIn);
 //testing
 app.get('/', (req, res) => {
     res.send("welcome to our todos api...")

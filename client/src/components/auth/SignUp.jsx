@@ -102,7 +102,7 @@ const SignUp = () => {
                     className={classes.spacing}
                     type="submit"
                 >
-                    SignIn
+                    Sign Up
                 </Button>
             </form>
         </>

@@ -1,6 +1,13 @@
-import React from 'react';
+// use state hook for redux
+import React, { useState } from 'react';
 import { Typography, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+// redux hooks
+import { useDispatch, useSelector } from 'react-redux';
+// import action creators
+import { signIn } from '../../store/actions/authActions';
+// for redirect user when sign up
+import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles({
     formStyle: {
@@ -16,6 +23,30 @@ const useStyles = makeStyles({
 
 const SignIn = () => {
     const classes = useStyles();
+    // using dispatch redux hook
+    const dispatch = useDispatch();
+    // set up default state hook
+    const [creds, setCreds] = useState({
+        email:"",
+        password:"",
+    });
+
+    // select the state from the redux store
+    const auth = useSelector((state) => state.auth);
+
+    const handleSubmit = (e) => {
+        // prevent the page for refreshing when submiting form
+        e.preventDefault();
+        // dispatch action creator and reset form values to default state
+        dispatch(signIn(creds))
+        setCreds({ 
+            email: "", 
+            password: "" 
+        });
+    };
+
+    // if a user is signin or sign up we redirect them to main page
+    if (auth._id) return <Redirect to="/" />;
 
     return(
         <>
@@ -23,9 +54,10 @@ const SignIn = () => {
                 noValidate
                 autoComplete="off"
                 className={classes.formStyle}
+                onSubmit={handleSubmit}
             >
                 <Typography variant="h5">
-                    signIn;
+                    Sign In
                 </Typography>
                 <TextField
                     className={classes.spacing}
@@ -33,6 +65,11 @@ const SignIn = () => {
                     label="enterEmail"
                     variant="outlined"
                     fullWidth
+                    // default value from state
+                    value = {creds.email}
+                    // on change event to update our value (e) for "event"
+                    // ... spread operator to spread the properties of our user
+                    onChange = {(e) => setCreds({...creds, email: e.target.value})}
                 />
                 <TextField
                     className={classes.spacing}
@@ -41,6 +78,11 @@ const SignIn = () => {
                     label="enterPassword"
                     variant="outlined"
                     fullWidth
+                    // default value from state
+                    value = {creds.password}
+                    // on change event to update our value (e) for "event"
+                    // ... spread operator to spread the properties of our user
+                    onChange = {(e) => setCreds({...creds, password: e.target.value})}
                 />
                 <Button
                     variant="contained"
@@ -48,7 +90,7 @@ const SignIn = () => {
                     className={classes.spacing}
                     type="submit"
                 >
-                    SignIn
+                    Sign In
                 </Button>
             </form>
         </>

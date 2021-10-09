@@ -5,6 +5,8 @@ import { AppBar, Typography, Toolbar, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 // react router dom
 import { Link, useHistory } from "react-router-dom";
+// redux hooks
+import { useSelector } from 'react-redux';
 
 // using makeStyles
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +30,10 @@ const Navbar = () => {
     const classes = useStyles();
     // use history from react router dom
     const history = useHistory();
-
+    // select the state from the redux store
+    const state = useSelector((state) => state);
+    console.log(state);
+    
     // signout fucntion
     const handleSignOut = () => {
         history.push("/signin");
