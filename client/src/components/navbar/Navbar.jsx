@@ -38,6 +38,8 @@ const Navbar = () => {
     console.log(state);
     // using dispatch redux hook
     const dispatch = useDispatch();
+    //load auth from state
+    const auth = useSelector((state) => state.auth);
     
     // signout fucntion
     const handleSignOut = () => {
@@ -56,39 +58,46 @@ const Navbar = () => {
                         </Link>
                     </Typography>
                     <>
-                        <Typography variant="subtitle2" className={classes.title}>
-                            Logged in as ...?
-                        </Typography>
-                        <Button
-                            edge="end"
-                            color="inherit"
-                            className={classes.authButton}
-                            onClick={() => handleSignOut()}
-                        >
-                            <Link className={classes.linkStyle} to="/">
-                                SignOut
-                            </Link>
-                        </Button>
-                    </>
-                    <>
-                        <Button
-                            edge="end"
-                            color="inherit"
-                            className={classes.authButton}
-                        >
-                            <Link className={classes.linkStyle} to="/signin">
-                                SignIn
-                            </Link>
-                        </Button>
-                        <Button
-                            edge="end"
-                            color="inherit"
-                            className={classes.authButton}
-                        >
-                            <Link className={classes.linkStyle} to="/signup">
-                                SignUp
-                            </Link>
-                        </Button>
+                        { auth._id ? 
+                            (
+                                <>
+                                    <Typography variant="subtitle2" className={classes.title}>
+                                        Logged in as {auth.name}
+                                    </Typography>
+                                    <Button
+                                        edge="end"
+                                        color="inherit"
+                                        className={classes.authButton}
+                                        onClick={() => handleSignOut()}
+                                    >
+                                        <Link className={classes.linkStyle} to="/">
+                                            SignOut
+                                        </Link>
+                                    </Button>
+                                </>
+                            ) : (
+                                <>
+                                    <Button
+                                        edge="end"
+                                        color="inherit"
+                                        className={classes.authButton}
+                                    >
+                                        <Link className={classes.linkStyle} to="/signin">
+                                            SignIn
+                                        </Link>
+                                    </Button>
+                                    <Button
+                                        edge="end"
+                                        color="inherit"
+                                        className={classes.authButton}
+                                    >
+                                        <Link className={classes.linkStyle} to="/signup">
+                                            SignUp
+                                        </Link>
+                                    </Button>
+                                </>
+                        )
+                        }
                     </>
                 </Toolbar>
             </AppBar>
