@@ -6,7 +6,10 @@ import { makeStyles } from "@material-ui/core/styles";
 // react router dom
 import { Link, useHistory } from "react-router-dom";
 // redux hooks
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+// import action creators
+import { signOut } from '../../store/actions/authActions';
+
 
 // using makeStyles
 const useStyles = makeStyles((theme) => ({
@@ -33,9 +36,12 @@ const Navbar = () => {
     // select the state from the redux store
     const state = useSelector((state) => state);
     console.log(state);
+    // using dispatch redux hook
+    const dispatch = useDispatch();
     
     // signout fucntion
     const handleSignOut = () => {
+        dispatch(signOut());
         history.push("/signin");
     };
 

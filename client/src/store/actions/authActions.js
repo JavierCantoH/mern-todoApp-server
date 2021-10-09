@@ -83,3 +83,14 @@ export const signIn = (creds) => {
       });
   };
 };
+
+// SIGNOUT action creator
+export const signOut = () => {
+  // using redux thunk accessing the store
+  return (dispatch) => {
+    dispatch({
+      type: "SIGN_OUT",
+    });
+
+  };
+};
